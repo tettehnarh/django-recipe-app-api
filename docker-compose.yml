@@ -1,0 +1,22 @@
+services:
+  # Define the application service
+  app:
+    # Build the Docker image from the Dockerfile in the current directory
+    build:
+      context: .
+      args:
+        - DEV=true
+
+    # Map port 8000 on the host to port 8000 in the container,
+    # allowing access to the app through localhost:8000
+    ports:
+      - "8000:8000"
+
+    # Mount the app directory on the host to the /app directory in the container,
+    # enabling code changes on the host to reflect immediately in the container
+    volumes:
+      - ./app:/app
+
+    # Run the Django development server on all network interfaces (0.0.0.0) on port 8000
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
